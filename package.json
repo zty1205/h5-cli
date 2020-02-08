@@ -1,0 +1,15 @@
+{
+  "name": "vue-cli-plugin-qwork",
+  "version": "0.0.1",
+  "description": "vue plugin",
+  "author": "zhangtengyue<zhangtengyue@qbb6.com>",
+  "main": "prompts.js",
+  "keywords": [
+    "vue",
+    "preset"
+  ],
+  "devDependencies": {
+    "@vue/cli-service": "^3.11.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
