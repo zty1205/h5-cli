@@ -7,4 +7,5 @@ author: <zty1160051490@qbb6.com>
 向 package.json 注入额外的依赖或字段，并向项目中添加文件。
 
 ## command
+vue create --preset zty1205/h5-cli my-project
 - 支持 option 是否需要添加store状态树
