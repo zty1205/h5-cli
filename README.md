@@ -1,5 +1,5 @@
-# qwork-cli
-基本vue-cli3的项目模板生成插件
+# h5-cli
+基本vue-cli3的项目模板生成插件, 用于生成开发H5模板
 author: <zty1160051490@qbb6.com>
 
 ## project
