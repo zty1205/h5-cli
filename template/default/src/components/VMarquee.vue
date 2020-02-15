@@ -12,146 +12,134 @@
 </template>
 
 <script>
-import marquee from '@/assets/js/marquee'
-export default {
-  name: 'VMarquee', // 跑马灯
-  data () {
-    return {
-      list: marquee,
-      itemContent1: '',
-      itemContent2: '',
-      index: 0,
-      isStart: false,
-      isInit: false,
-      orderType: 'order'
-    }
-  },
-  props: {
-    // 跑马灯类型： 1.order 顺序； 2.random 随机
-    type: {
-      default: 'random',
-      type: String
+  import marquee from '@/assets/js/marquee'
+  export default {
+    name: 'VMarquee', // 跑马灯
+    data() {
+      return {
+        list: marquee,
+        itemContent1: '',
+        itemContent2: '',
+        index: 0,
+        isStart: false,
+        isInit: false,
+        orderType: 'order'
+      }
     },
-    // 数据
-    data: {
-      default: null,
-      type: Array
+    props: {
+      // 跑马灯类型： 1.order 顺序； 2.random 随机
+      type: {
+        default: 'random',
+        type: String
+      },
+      // 数据
+      data: {
+        default: null,
+        type: Array
+      },
+      // 指定开始的索引，order类型时生效
+      start: {
+        default: 0,
+        type: Number
+      },
+      // 跑马灯停留速度
+      delay: {
+        default: 1000,
+        type: Number
+      }
     },
-    // 指定开始的索引，order类型时生效
-    start: {
-      default: 0,
-      type: Number
-    },
-    // 跑马灯停留速度
-    delay: {
-      default: 1000,
-      type: Number
-    }
-  },
-  created () {
-    this.$fetch.post({
-      url: 'api/event/internal/h5/content/get',
-      data: ['fdf244c4c8e56ea498714aa17558cf17']
-    }).then(res => {
-      this.list = marquee.concat((res.list || []).map(x => x.description))
-      let list = this.list
-      // console.log('list = ', list)
-      let len = list.length
+    created() {
+      if (this.data) {
+        this.list = this.data;
+      }
+      let list = this.list,
+        len = list.length;
       if (len < 2) {
-        return
+        return;
       }
-      let orderType = this.type
-      if (len === 2) {
-        orderType = 'order'
-      }
-      this.orderType = orderType
-      if (orderType === 'random') {
-        this.itemContent1 = list[this.randomInt(0, len - 1)]
-        this.getRandom()
+      if (this.type == 'random') {
+        this.itemContent1 = list[this.randomInt(0, len - 1)];
+        this.getRandom();
       } else {
-        let index = this.start
-        this.itemContent1 = list[index]
-        this.index++
-        this.itemContent2 = list[this.index]
+        let index = this.start;
+        this.itemContent1 = list[index];
+        this.index++;
+        this.itemContent2 = list[this.index];
       }
-    }).catch(err => {
-      console.log('initTextFlow = err', err)
-    })
-  },
-  mounted () {
-    setTimeout(() => {
-      let marquee = this.$refs.marquee
-      if (this.orderType && this.orderType === 'random') {
-        marquee.addEventListener('transitionend', () => {
-          this.onTransitionEndRandom()
-        })
-        marquee.addEventListener('webkitTransitionEnd', () => {
-          this.onTransitionEndRandom()
-        })
-      } else {
-        marquee.addEventListener('transitionend', () => {
-          this.onTransitionEndOrder()
-        })
-        marquee.addEventListener('webkitTransitionEnd', () => {
-          this.onTransitionEndOrder()
-        })
-      }
-      this.run()
-    }, 50)
-  },
-  methods: {
-    // 开始
-    run () {
-      this.$nextTick(() => {
-        if (this.isInit) {
-          this.isStart = true
+    },
+    mounted() {
+      setTimeout(() => {
+        let marquee = this.$refs.marquee
+        if (this.orderType && this.orderType === 'random') {
+          marquee.addEventListener('transitionend', () => {
+            this.onTransitionEndRandom()
+          })
+          marquee.addEventListener('webkitTransitionEnd', () => {
+            this.onTransitionEndRandom()
+          })
         } else {
-          setTimeout(() => {
-            this.isStart = true
-            this.isInit = true
-          }, 1000)
+          marquee.addEventListener('transitionend', () => {
+            this.onTransitionEndOrder()
+          })
+          marquee.addEventListener('webkitTransitionEnd', () => {
+            this.onTransitionEndOrder()
+          })
         }
-      })
+        this.run()
+      }, 50)
     },
-    // 获得随机整数
-    randomInt (min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    // 随机
-    onTransitionEndRandom () {
-      this.itemContent1 = this.itemContent2
-      this.getRandom()
-      this.isStart = false
-      setTimeout(this.run, this.delay)
-    },
-    // 顺序
-    onTransitionEndOrder () {
-      this.itemContent1 = this.itemContent2
-      let index = this.index
-      if (index >= this.list.length - 1) {
-        this.index = 0
-      } else {
-        this.index++
+    methods: {
+      // 开始
+      run() {
+        this.$nextTick(() => {
+          if (this.isInit) {
+            this.isStart = true
+          } else {
+            setTimeout(() => {
+              this.isStart = true
+              this.isInit = true
+            }, 1000)
+          }
+        })
+      },
+      // 获得随机整数
+      randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      },
+      // 随机
+      onTransitionEndRandom() {
+        this.itemContent1 = this.itemContent2
+        this.getRandom()
+        this.isStart = false
+        setTimeout(this.run, this.delay)
+      },
+      // 顺序
+      onTransitionEndOrder() {
+        this.itemContent1 = this.itemContent2
+        let index = this.index
+        if (index >= this.list.length - 1) {
+          this.index = 0
+        } else {
+          this.index++
+        }
+        this.itemContent2 = this.list[this.index]
+        this.isStart = false
+        setTimeout(this.run, this.delay)
+      },
+      // 获取下一个随机值
+      getRandom() {
+        let list = this.list
+        let len = this.list.length
+        let index
+        let itemContent1 = this.itemContent1
+        // 确保随机值和之前的不一致
+        while (!index || list[index] === itemContent1) {
+          index = this.randomInt(0, len - 1)
+        }
+        this.itemContent2 = list[index]
       }
-      this.itemContent2 = this.list[this.index]
-      this.isStart = false
-      setTimeout(this.run, this.delay)
-    },
-    // 获取下一个随机值
-    getRandom () {
-      let list = this.list
-      let len = this.list.length
-      let index
-      let itemContent1 = this.itemContent1
-      // 确保随机值和之前的不一致
-      while (!index || list[index] === itemContent1) {
-        index = this.randomInt(0, len - 1)
-      }
-      this.itemContent2 = list[index]
     }
   }
-}
-
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
   .marquee_container {
@@ -201,5 +189,4 @@ export default {
       }
     }
   }
-
 </style>
