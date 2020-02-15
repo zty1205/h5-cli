@@ -1,4 +1,3 @@
-// ******  updated by wangyh ==2019 1.16
 import Vue from 'vue'
 import Toast from './Index.vue' // 引入组件
 let ToastConstructor = Vue.extend(Toast) // 返回一个“扩展实例构造器”

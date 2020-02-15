@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 <%_ } _%>
 
-import toast from '@/components//toast'
+import toast from '@/components/toast'
 import fetchData from '@/assets/js/fetchData'
 
 import filterObj from './filter/index'
