@@ -10,7 +10,7 @@
 /* eslint-disable no-undef */
 // import eruda from 'eruda'
 // eruda.init()
-import { setRem, fixRem } from "./assets/utils"
+import { setRem, fixRem } from "./assets/js/utils"
 setRem(750)
 export default {
   mounted  () {

@@ -12,6 +12,7 @@ import toast from '@/components/toast'
 import fetchData from '@/assets/js/fetchData'
 import filterObj from './filter/index'
 
+Vue.prototype.$toast = toast
 Vue.prototype.$fetch = fetchData
 Vue.prototype.global = {}
 Vue.config.productionTip = false

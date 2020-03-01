@@ -51,6 +51,7 @@ export function isObjectEmpty(obj) {
   return Object.keys(obj).length !== 0 || Object.values(obj).length !== 0;
 }
 
+/* eslint-disable no-prototype-builtins */
 export function deepClone(obj, hash = new WeakMap()) {
   if (obj instanceof RegExp) {
     return new RegExp(obj);
