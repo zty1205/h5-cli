@@ -2,7 +2,6 @@
 import axios from 'axios'
 import toast from '@/components/toast'
 const context = "/"
-console.log('toast = ', toast)
 
 // get请求
 function get ({ url, params, errorInfo, noErrorToast }) {
@@ -32,7 +31,7 @@ function handlePromise (promiseObj, errorInfo, noErrorToast) {
       if (res && res.data && res.data.rc === 0) {
         return Promise.resolve(res.data)
       } else {
-        !noErrorToast && toast('服务器开小差了')
+        !noErrorToast && toast.toggle('服务器开小差了')
         return Promise.reject(res.data)
       }
     },
@@ -46,7 +45,7 @@ function handlePromise (promiseObj, errorInfo, noErrorToast) {
         // 发送请求时产生错误
         console.log('Error', error.message)
       }
-      !noErrorToast && toast('服务器开小差了')
+      !noErrorToast && toast.toggle('服务器开小差了')
       return Promise.reject(error)
     }
   )
