@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 import axios from 'axios'
-import { toast } from '@/components/toast'
+import toast from '@/components/toast'
 const context = "/"
+console.log('toast = ', toast)
 
 // get请求
 function get ({ url, params, errorInfo, noErrorToast }) {

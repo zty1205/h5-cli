@@ -10,6 +10,18 @@ module.exports = (api, options, rootOptions) => {
     scripts: scripts
   })
 
+  if (options.router) {
+    api.extendPackage({
+      dependencies: {
+        "vue-router": "^3.0.3"
+      }
+    });
+
+    api.render({
+      "./src/router.js": "../template/route/router.js"
+    });
+  }
+
   if (options.vuex) {
     api.extendPackage({
       dependencies: {
